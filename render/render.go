@@ -2,7 +2,7 @@
 // -*- mode: go; coding: utf-8; -*-
 // Created on 09. 04. 2022 by Benjamin Walkenhorst
 // (c) 2022 Benjamin Walkenhorst
-// Time-stamp: <2022-04-09 15:54:22 krylon>
+// Time-stamp: <2022-04-11 14:38:45 krylon>
 
 package render
 
@@ -23,7 +23,7 @@ type Pt struct {
 func Render() error {
 	const (
 		size     = 1000
-		stepCnt  = 25
+		stepCnt  = 16
 		stepSize = size / stepCnt
 		path     = "pattern.svg"
 	)
@@ -83,8 +83,8 @@ func Render() error {
 	}
 
 	for _, p := range edgePoints {
-		canvas.Line(p1.X, p1.Y, p.X, p.Y, "fill:black;color:black;stroke:black")
-		canvas.Line(p2.X, p2.Y, p.X, p.Y, "fill:black;color:black;stroke:black")
+		canvas.Line(p1.X, p1.Y, p.X, p.Y, "fill:magenta;color:magenta;stroke:magenta")
+		canvas.Line(p2.X, p2.Y, p.X, p.Y, "fill:green;color:green;stroke:green")
 	}
 
 	return nil
