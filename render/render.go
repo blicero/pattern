@@ -2,7 +2,7 @@
 // -*- mode: go; coding: utf-8; -*-
 // Created on 09. 04. 2022 by Benjamin Walkenhorst
 // (c) 2022 Benjamin Walkenhorst
-// Time-stamp: <2022-04-11 14:38:45 krylon>
+// Time-stamp: <2022-04-16 15:38:09 krylon>
 
 package render
 
@@ -22,17 +22,19 @@ type Pt struct {
 
 func Render() error {
 	const (
-		size     = 1000
+		size     = 2000
 		stepCnt  = 16
 		stepSize = size / stepCnt
 		path     = "pattern.svg"
+		style    = "fill:black;color:black;stroke:black"
+		pCnt     = 2
 	)
 
 	var (
 		err    error
 		fh     *os.File
 		canvas *svg.SVG
-		p1, p2 Pt
+		points = make([]Pt, pCnt)
 	)
 
 	rand.Seed(time.Now().Unix())
@@ -51,10 +53,10 @@ func Render() error {
 	canvas.Start(size, size)
 	defer canvas.End()
 
-	p1.X = rand.Intn(size)
-	p1.Y = rand.Intn(size)
-	p2.X = rand.Intn(size)
-	p2.Y = rand.Intn(size)
+	for i := 0; i < pCnt; i++ {
+		points[i].X = rand.Intn(size)
+		points[i].Y = rand.Intn(size)
+	}
 
 	// Gather edge points
 	var (
@@ -83,8 +85,9 @@ func Render() error {
 	}
 
 	for _, p := range edgePoints {
-		canvas.Line(p1.X, p1.Y, p.X, p.Y, "fill:magenta;color:magenta;stroke:magenta")
-		canvas.Line(p2.X, p2.Y, p.X, p.Y, "fill:green;color:green;stroke:green")
+		for _, v := range points {
+			canvas.Line(v.X, v.Y, p.X, p.Y, style)
+		}
 	}
 
 	return nil
